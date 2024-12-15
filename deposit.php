@@ -1,5 +1,4 @@
-gif89abcdefnjajsjakbsg;
-<?php
+<php
 include('session.php');
 if (isset($_SESSION['user'])) {
     $user = mysqli_query($conn, "SELECT * FROM `tb_user` WHERE user = '" . $_SESSION['user'] . "'") or die(mysqli_error());
@@ -361,7 +360,8 @@ if (isset($_SESSION['user'])) {
                                 <div class=tab-menu-background-container>
                                     <div class=tab-menu-container><a href="deposit" data-active=true> <i data-icon=deposit style="--image-src:url(//nx-cdn.nx2wl.com/Images/nexus-beta/dark-purple/mobile/tabs/deposit.svg?v=20240430);--active-image-src:url(//nx-cdn.nx2wl.com/Images/nexus-beta/dark-purple/mobile/tabs/deposit-active.svg?v=20240430)"></i> Deposit </a> <a href="withdrawal" data-active=false> <i data-icon=withdrawal style="--image-src:url(//nx-cdn.nx2wl.com/Images/nexus-beta/dark-purple/mobile/tabs/withdrawal.svg?v=20240430);--active-image-src:url(//nx-cdn.nx2wl.com/Images/nexus-beta/dark-purple/mobile/tabs/withdrawal-active.svg?v=20240430)"></i> Penarikan </a></div>
                                 </div>
-                                <?phperror_reporting(0);
+                                <?php
+                                error_reporting(0);
                                 if (!empty($_GET['notif'])) {
                                     if ($_GET['notif'] == 1) {
                                         echo '
@@ -426,12 +426,7 @@ if (isset($_SESSION['user'])) {
                                         <div class="form-group">
                                             <label for="FromAccount">Akun Asal</label>
                                             <select class="form-control valid" name="pay_from" required>
-                                                <option value="<?php echo $sbs['cuid']; ?>"><?php echo $sbs['akun']; ?> - <?php $no_rek = $sbs['no_rek']; // Panjang total nomor rekening
-$total_length = strlen($no_rek); // Panjang digit yang akan ditampilkan (misalnya, 4 digit terakhir)
-$length_to_display = 4; // Bagian nomor rekening yang akan ditampilkan
-$visible_part = substr($no_rek, -$length_to_display); // Bagian nomor rekening yang akan disensor
-$censored_part = str_repeat('X', $total_length - $length_to_display); // Menampilkan nomor rekening yang telah disensor
-echo $censored_part . $visible_part;?> - <?php echo $sbs['pemilik']; ?></option>
+                                                <option value="<?php echo $sbs['cuid']; ?>"><?php echo $sbs['akun']; ?> - <?php echo $sbs['no_rek']; ?> - <?php echo $sbs['pemilik']; ?></option>
                                             </select>
                                             <input class="form-control" type="hidden" name="userID" value="<?php echo $u['cuid']; ?>" readonly>
                                             <span class="standard-required-message">Pilih Akun Asal untuk disetor</span>
@@ -444,22 +439,19 @@ echo $censored_part . $visible_part;?> - <?php echo $sbs['pemilik']; ?></option>
                                                 <span id="view_all_available_banks">Lihat Semua</span>
                                             </div>
 
-                                            <select name="metode" class="form-control valid" required="">
-                                                                                                    <option value="864">
-                                                        Ewallet Dana -  082128253534 - M.hanif                                                    </option>
-                                                                                                    <option value="869">
-                                                        Bank Central Asia (BCA) - 7126000765 - DANDI                                                    </option>
-                                                                                                    <option value="870">
-                                                        Bank Rakyat Indonesia (BRI) - 384801020916503 - DIAN                                                    </option>
-                                                                                                    <option value="871">
-                                                        Bank Mandiri - 1760005152143 - DIAN PERMANA                                                    </option>
-                                                                                                    <option value="872">
-                                                        E-Wallet GOPAY - 08811371913 - Ai                                                    </option>
-                                                                                                    <option value="873">
-                                                        E-Wallet OVO - 088214436530 - SUANI B SUPANDI                                                    </option>
-                                                                                                    <option value="874">
-                                                        Bank Negara Indonesia (BNI) -   - GUNAKAN QRIS UNTUK DEPOSIT                                                    </option>
-                                                                                            </select><div class="to-account-label-container">
+                                            <select name="metode" class="form-control valid" required>
+                                                <?php
+                                                $sql_bank = mysqli_query($conn, "SELECT * FROM `tb_bank` WHERE userID = 1 AND status = 1 ORDER BY cuid ASC") or die(mysqli_error());
+                                                $no = 0;
+                                                while ($sb = mysqli_fetch_array($sql_bank)) {
+                                                    $no++;
+                                                ?>
+                                                    <option value="<?php echo $sb['cuid']; ?>">
+                                                        <?php echo $sb['akun']; ?> - <?php echo $sb['no_rek']; ?> - <?php echo $sb['pemilik']; ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                            <div class="to-account-label-container">
                                                 <label for="ToAccount"></label>
                                                 <span id="view_all_available_banks"></span>
                                             </div>
@@ -553,7 +545,8 @@ echo $censored_part . $visible_part;?> - <?php echo $sbs['pemilik']; ?></option>
                 </div>
                 <div class=footer-links-container>
                     <div class=container>
-                        <div class=row><div class=col-md-12>
+                        <div class=row>
+                            <div class=col-md-12>
                                 <ul class=footer-links>
                                     <li><a href=/mobile/about-us> Tentang <?php echo $s0['instansi']; ?> </a>
                                     <li><a href=/mobile/responsible-gaming> Responsible Gambling </a>
@@ -611,7 +604,7 @@ echo $censored_part . $visible_part;?> - <?php echo $sbs['pemilik']; ?></option>
                                         <li>Info Game Slot Terbaru
                                         <li>Demo Slot Pragmatic Play
                                     </ol>
-                                    <h3>Bocoran5 Slot Pragmatic Play Anti Rungkat di <?php echo $s0['instansi']; ?></h3>
+                                    <h3>Bocoran 5 Slot Pragmatic Play Anti Rungkat di <?php echo $s0['instansi']; ?></h3>
                                     <p>Sudah memiliki sertifikat dan hak khusus dari pragmatic play maka <?php echo $s0['instansi']; ?> mempunyai strategi dengan menaikkan win rate kemenangan bagi para pemain yang bisa anda akses di <a href="https://www.keenland.com/" style=color:#a500e0><b>rtp slot pragmatic</b></a> terupdate dibawah naungan pragmatic play. Tidak dipungkiri poin-poin kelebihan dari situs yang telah bekerja sama dengan provider pragmatic lebih cenderung digandrungi dan bisa dinobatkan sebagai situs slot anti rungkat. Berikut bocoran rahasia khusus untuk anda game slot pragmatic play anti rungkat 2024 bersama dengan rtp nya:
                                     <ol>
                                         <li>Pragmatic Play Slot Anti Rungkat Sweet Bonanza</li>
