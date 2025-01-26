@@ -1,4 +1,3 @@
-gif89a;jHshaksjhsbsjj727272
  <ul class=bank-status-list>
 
     <?php
